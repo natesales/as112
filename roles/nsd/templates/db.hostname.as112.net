@@ -1,0 +1,7 @@
+$TTL 1W
+@ SOA {{ domain }}. {{ email | replace('@', '.') }}. (2 1W 1M 1W 1W)
+@ IN NS blackhole-1.iana.org.
+@ IN NS blackhole-2.iana.org.
+@ IN TXT "See http://as112.net/ for more information."
+@ IN TXT "{{ description }}"
+@ IN LOC {{ loc }}

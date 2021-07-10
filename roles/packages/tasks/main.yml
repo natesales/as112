@@ -1,0 +1,24 @@
+- name: Add sid repo
+  apt_repository:
+    repo: deb https://deb.debian.org/debian/ sid main
+    state: present
+
+- name: Set default release
+  copy:
+    content: 'APT::Default-Release "stable";'
+    dest: /etc/apt/apt.conf.d/default-release
+
+- name: Add pathvector repo
+  apt_repository:
+    repo: deb [trusted=yes] https://repo.natesales.net/apt /
+    state: present
+
+- name: Install packages
+  apt:
+    update_cache: true
+    pkg:
+      - nsd=4.3.5-1
+      - dnsutils
+      - pathvector
+      - ufw
+      - bird2

@@ -1,0 +1,7 @@
+- name: Install
+  hosts: all
+  roles:
+    - packages
+    - ufw
+    - nsd
+    - pathvector

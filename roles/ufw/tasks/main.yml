@@ -1,0 +1,22 @@
+- name: Allow DNS traffic
+  ufw:
+    rule: allow
+    port: 53
+
+- name: Allow from ACL
+  ufw:
+    rule: allow
+    src: "{{ item }}"
+  loop: "{{ acl.management }}"
+
+- name: Allow BGP ACL
+  ufw:
+    rule: allow
+    port: 179
+    src: "{{ item }}"
+  loop: "{{ acl.bgp }}"
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: reject

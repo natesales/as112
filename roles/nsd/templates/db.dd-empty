@@ -1,0 +1,6 @@
+; db.dd-empty
+; Empty zone for Direct Delegation AS112 service.
+$TTL 1W
+@ IN SOA prisoner.iana.org. hostmaster.root-servers.org. (1 1W 1M 1W 1W)
+@ IN NS blackhole-1.iana.org.
+@ IN NS blackhole-2.iana.org.

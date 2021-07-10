@@ -1,0 +1,44 @@
+- name: Get nsd_exporter
+  get_url:
+    url: https://github.com/optix2000/nsd_exporter/releases/download/v0.3.1/nsd_exporter-linux-amd64
+    dest: /usr/bin/nsd_exporter
+    mode: +x
+
+- name: Copy nsd_exporter service
+  template:
+    src: nsd_exporter.service
+    dest: /lib/systemd/system/nsd-exporter.service
+  register: exporter
+
+- name: Start and enable nsd_exporter
+  systemd:
+    daemon_reload: true
+    name: nsd-exporter
+    state: started
+    enabled: true
+
+- name: Restart nsd-exporter
+  systemd:
+    name: nsd-exporter
+    state: restarted
+  when: exporter.changed
+
+- name: Copy nsd config
+  template:
+    src: "{{ item }}"
+    dest: "/etc/nsd/{{ item | basename }}"
+  with_fileglob:
+    - ../templates/*
+  register: config
+
+- name: Start and enable nsd
+  systemd:
+    name: nsd
+    state: started
+    enabled: true
+
+- name: Restart nsd
+  systemd:
+    name: nsd
+    state: restarted
+  when: config.changed

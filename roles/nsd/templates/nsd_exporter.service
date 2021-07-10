@@ -1,0 +1,12 @@
+[Unit]
+Description=NSD exporter
+After=network.target
+
+[Service]
+Type=simple
+Environment="GODEBUG=x509ignoreCN=0"
+ExecStart=/usr/bin/nsd_exporter
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,15 @@
+- name: Create pathvector config
+  template:
+    src: pathvector.yml
+    dest: /etc/pathvector.yml
+  register: config
+
+- name: Start and enable bird
+  systemd:
+    name: bird
+    state: started
+    enabled: true
+
+- name: Reload pathvector
+  shell: pathvector g
+  when: config.changed
